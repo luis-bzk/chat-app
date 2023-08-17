@@ -63,7 +63,7 @@ export function RegisterPage() {
             });
             await setDoc(doc(db, 'users', resFirebase.user.uid), {
               uid: resFirebase.user.uid,
-              name: name,
+              displayName: name,
               email: email,
               photoURL: downloadURL,
             });

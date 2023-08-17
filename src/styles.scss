@@ -346,6 +346,19 @@
         border-radius: 10px;
       }
 
+      .not-messages {
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 10px 20px;
+        border: 1px solid #94a3b8;
+        border-radius: 5px;
+        background-color: #e2e8f0;
+        width: 100%;
+        max-width: 300px;
+        color: #475569;
+        text-align: center;
+      }
+
       .message {
         display: flex;
         flex-direction: row;
@@ -358,12 +371,6 @@
           flex-direction: column;
           align-items: flex-start;
           gap: 5px;
-
-          span {
-            color: #64748b;
-            font-size: 14px;
-            font-style: italic;
-          }
 
           img {
             height: 40px;
@@ -394,6 +401,11 @@
             align-content: center;
             object-fit: cover;
           }
+          span {
+            color: #64748b;
+            font-size: 14px;
+            font-style: italic;
+          }
         }
 
         &.owner {
@@ -413,6 +425,27 @@
             }
           }
         }
+      }
+    }
+
+    .chats-board {
+      background-color: #dbe0ee;
+      height: calc(100% - 100px);
+      padding: 10px;
+      padding-right: 18px;
+      overflow-y: scroll;
+
+      .info-chats {
+        margin: 0 auto;
+        margin-top: 50px;
+        padding: 10px 20px;
+        border: 1px solid #94a3b8;
+        border-radius: 5px;
+        background-color: #e2e8f0;
+        width: 100%;
+        max-width: 300px;
+        color: #475569;
+        text-align: center;
       }
     }
 

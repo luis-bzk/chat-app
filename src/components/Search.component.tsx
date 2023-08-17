@@ -1,9 +1,19 @@
 import { useState, KeyboardEvent, useContext } from 'react';
 
-import { DocumentData, collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+  serverTimestamp,
+} from 'firebase/firestore';
 import { db } from '../firebase';
 import { FirebaseError } from 'firebase/app';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/auth';
 
 export function SearchComponent() {
   const [userName, setUserName] = useState('');
@@ -12,10 +22,9 @@ export function SearchComponent() {
   const { currentUser } = useContext(AuthContext);
 
   const handleSearch = async () => {
-    const q = query(collection(db, 'users'), where('name', '==', userName));
+    const q = query(collection(db, 'users'), where('displayName', '==', userName));
 
     try {
-      console.log({ q });
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
@@ -44,12 +53,34 @@ export function SearchComponent() {
         // create chat
         await setDoc(doc(db, 'chats', combinedID), { messages: [] });
 
-        // userChats
+        // userChats main
+        await updateDoc(doc(db, 'userChats', currentUser.uid), {
+          [combinedID + '.userInfo']: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedID + '.date']: serverTimestamp(),
+        });
+
+        // userChats other user
+        await updateDoc(doc(db, 'userChats', user.uid), {
+          [combinedID + '.userInfo']: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          },
+          [combinedID + '.date']: serverTimestamp(),
+        });
       }
     } catch (error) {
       const { code } = error as FirebaseError;
       console.log({ code });
+    } finally {
+      setUser(null);
+      setUserName('');
     }
+
     // create chat
   };
 
@@ -69,7 +100,7 @@ export function SearchComponent() {
             <img src={user.photoURL} alt='' />
 
             <div className='userChatInfo'>
-              <span>{user.name}</span>
+              <span>{user.displayName}</span>
             </div>
           </div>
         ) : null}

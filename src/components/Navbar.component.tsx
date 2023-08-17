@@ -4,7 +4,7 @@ import { useUIStore } from '../store/UIStore';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../context/auth';
 export function NavbarComponent() {
   const { currentUser } = useContext(AuthContext);
   const { toggleMenuMobile } = useUIStore();

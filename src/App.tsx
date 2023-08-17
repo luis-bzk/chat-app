@@ -5,11 +5,10 @@ import { RegisterPage } from './pages/Register';
 import { HomePage } from './pages/Home';
 import { LoginPage } from './pages/Login';
 import { useContext } from 'react';
-import { AuthContext } from './context/AuthContext';
+import { AuthContext } from './context/auth';
 
 function Root() {
   const { currentUser } = useContext(AuthContext);
-  console.log({ currentUser });
 
   const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     if (!currentUser) {

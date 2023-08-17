@@ -5,13 +5,17 @@ import chatsIcon from '../assets/chats.svg';
 
 import { InputComponent, MessagesComponent } from '.';
 import { useUIStore } from '../store/UIStore';
+import { useContext } from 'react';
+import { ChatContext } from '../context/chats';
 export function ChatComponent() {
+  const { user, chatId } = useContext(ChatContext);
+
   const { toggleMenuMobile } = useUIStore();
 
   return (
     <div className='chat'>
       <div className='chatInfo'>
-        <span>Jane</span>
+        <span>{user.displayName ? user.displayName : 'Chats'}</span>
         <div className='chatIcons'>
           <img src={cameraIcon} alt='camera icon' />
           <img src={addIcon} alt='add icon' />
@@ -21,7 +25,13 @@ export function ChatComponent() {
         </div>
       </div>
 
-      <MessagesComponent />
+      {chatId ? (
+        <MessagesComponent />
+      ) : (
+        <div className='chats-board'>
+          <p className='info-chats'>Selecciona un chat</p>
+        </div>
+      )}
       <InputComponent />
     </div>
   );
