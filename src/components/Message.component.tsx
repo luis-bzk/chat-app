@@ -24,12 +24,7 @@ export function MessageComponent({ message }: Props) {
       </div>
       <div className='messageContent'>
         <p>{message.text}</p>
-        {message.image ? (
-          <img
-            src='https://images.pexels.com/photos/3323163/pexels-photo-3323163.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            alt=''
-          />
-        ) : null}
+        {message.image ? <img src={message.image} alt='' /> : null}
         <span>{parseDate(message.date)}</span>
       </div>
     </div>

@@ -396,8 +396,8 @@
           }
 
           img {
-            height: 400px;
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             align-content: center;
             object-fit: cover;
           }
