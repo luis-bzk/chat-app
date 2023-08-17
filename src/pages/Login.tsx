@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import logoImage from '../assets/icon-message.png';
 import { auth } from '../firebase';
 import { FirebaseError } from 'firebase/app';
+import { ToastAlertError } from '../utils/ToastAlert.component';
 
 export function LoginPage() {
   const [loadingForm, setLoadingForm] = useState(false);
@@ -22,10 +23,10 @@ export function LoginPage() {
     event.currentTarget.reset();
 
     if (!email) {
-      return alert('Necesitas introducir tu correo');
+      return ToastAlertError('Necesitas introducir tu correo');
     }
     if (!password) {
-      return alert('Necesitas introducir tu contraseña');
+      return ToastAlertError('Necesitas introducir tu contraseña');
     }
 
     try {
@@ -37,11 +38,11 @@ export function LoginPage() {
 
       switch (code) {
         case 'auth/wrong-password':
-          return alert('Email o contraseña inválidos');
+          return ToastAlertError('Email o contraseña inválido');
         case 'auth/user-not-found':
-          return alert('Email o contraseña inválidos');
+          return ToastAlertError('Email o contraseña inválido');
         default:
-          return alert(code);
+          return ToastAlertError(code);
       }
     } finally {
       setLoadingForm(false);

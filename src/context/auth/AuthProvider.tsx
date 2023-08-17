@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { auth } from '../../firebase';
 import { User, onAuthStateChanged } from 'firebase/auth';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 interface Props {
   children: JSX.Element;
@@ -25,5 +27,11 @@ export const AuthProvider = ({ children }: Props) => {
     // methods
   };
 
-  return <AuthContext.Provider value={valuesProvider}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={valuesProvider}>
+      <ToastContainer />
+
+      {children}
+    </AuthContext.Provider>
+  );
 };

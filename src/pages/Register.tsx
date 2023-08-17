@@ -10,6 +10,7 @@ import addImage from '../assets/add-image.svg';
 import logoImage from '../assets/icon-message.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { FirebaseError } from 'firebase/app';
+import { ToastAlertError } from '../utils/ToastAlert.component';
 
 export function RegisterPage() {
   const [loadingForm, setLoadingForm] = useState(false);
@@ -28,16 +29,16 @@ export function RegisterPage() {
 
     try {
       if (!name) {
-        return alert('Necesitas introducir tu nombre');
+        return ToastAlertError('Necesitas introducir tu nombre');
       }
       if (!email) {
-        return alert('Necesitas introducir tu correo');
+        return ToastAlertError('Necesitas introducir tu correo');
       }
       if (!password) {
-        return alert('Necesitas introducir tu contraseña');
+        return ToastAlertError('Necesitas introducir tu contraseña');
       }
       if (!file.name) {
-        return alert('Necesitas seleccionar tu avatar');
+        return ToastAlertError('Necesitas seleccionar tu avatar');
       }
 
       const resFirebase = await createUserWithEmailAndPassword(auth, email.toString(), password.toString());
@@ -78,13 +79,13 @@ export function RegisterPage() {
 
       switch (code) {
         case 'auth/email-already-in-use':
-          return alert('Este usuario ya se encuentra registrado');
+          return ToastAlertError('Este usuario ya se encuentra registrado');
 
         case 'auth/weak-password':
-          return alert('La contraseña es muy débil');
+          return ToastAlertError('La contraseña es muy débil');
 
         default:
-          return alert(code);
+          return ToastAlertError(code);
       }
     } finally {
       setLoadingForm(false);
