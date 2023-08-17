@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }: Props) => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
     });
-
     return () => {
       unsub();
     };

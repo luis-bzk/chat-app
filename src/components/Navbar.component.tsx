@@ -20,7 +20,7 @@ export function NavbarComponent() {
 
       <div className='user'>
         <img src={currentUser!.photoURL!} alt='' className='profile-picture' />
-        <span>Luis B</span>
+        <span>{currentUser?.displayName}</span>
 
         <button type='button' onClick={logout}>
           Salir

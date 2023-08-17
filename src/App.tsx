@@ -4,38 +4,35 @@ import './styles.scss';
 import { RegisterPage } from './pages/Register';
 import { HomePage } from './pages/Home';
 import { LoginPage } from './pages/Login';
-import { AuthProvider } from './context/AuthProvider';
-// import { useContext } from 'react';
-// import { AuthContext } from './context/AuthContext';
-import { auth } from './firebase';
+import { useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
 
 function Root() {
-  // const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
+  console.log({ currentUser });
 
   const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-    if (!auth.currentUser) {
+    if (!currentUser) {
       return <Navigate to={'/login'} />;
     }
     return children;
   };
 
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path='/'>
-          <Route
-            index
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path='/register' element={<RegisterPage />} />
-          <Route path='/login' element={<LoginPage />} />
-        </Route>
-      </Routes>
-    </AuthProvider>
+    <Routes>
+      <Route path='/'>
+        <Route
+          index
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
+      </Route>
+    </Routes>
   );
 }
 
